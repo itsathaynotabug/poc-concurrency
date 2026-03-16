@@ -33,18 +33,26 @@ jobs:
           sudo mv k6-v0.55.0-linux-amd64/k6 /usr/local/bin/k6
           k6 version
 
-      # 5. Sobe o json-server em background
+      # 5. Instala wait-on para esperar servidor
+      - name: Instalar wait-on
+        run: npm install -g wait-on
+
+      # 6. Setup inicial do db.json
+      - name: Setup db.json
+        run: node setup-db.js
+
+      # 7. Sobe o json-server em background
       - name: Subir json-server
-        run: npx json-server --watch db.json --port 3000 &
+        run: npx json-server --watch db.json --port 3000 > /tmp/json-server.log 2>&1 &
 
-      # 6. Aguarda o servidor estar pronto
-      - name: Aguardar servidor
+      # 8. Aguarda o servidor estar realmente pronto
+      - name: Aguardar servidor estar pronto
         run: |
-          echo "Aguardando json-server subir..."
-          sleep 5
-          curl http://localhost:3000/pokemons
+          echo "Aguardando json-server na porta 3000..."
+          wait-on http://localhost:3000/pokemons --timeout 30000 --interval 1000
+          echo "✅ Servidor pronto!"
 
-      # 7. Roda os testes (cada um reseta o db antes de rodar)
+      # 9. Roda os testes (cada um reseta o db antes de rodar)
       - name: Lost Update Test
         run: node run-lost-update-test.js
 

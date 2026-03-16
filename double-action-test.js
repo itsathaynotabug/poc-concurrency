@@ -15,7 +15,6 @@ export const options = {
     },
   },
   thresholds: {
-    // Se qualquer requisição falhar → teste quebra
     http_req_failed: ["rate==0"],
   },
 };

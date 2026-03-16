@@ -11,9 +11,9 @@ async function runTest() {
   const setup = exec("node setup-db.js");
   
   setup.on("close", () => {
-    console.log("⏳ Aguardando 2 segundos...");
+    console.log("⏳ Aguardando 3 segundos para json-server recarregar...");
     
-    // Aguarda 2 segundos
+    // Aguarda 3 segundos
     setTimeout(() => {
       console.log("🚀 Inicializando teste: lost-update-test.js");
       
@@ -31,7 +31,7 @@ async function runTest() {
       test.on("close", (code) => {
         process.exit(code);
       });
-    }, 2000);
+    }, 3000);
   });
 }
 
