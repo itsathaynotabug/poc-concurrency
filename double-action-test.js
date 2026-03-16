@@ -14,6 +14,10 @@ export const options = {
       maxDuration: "5s",
     },
   },
+  thresholds: {
+    // Se qualquer requisição falhar → teste quebra
+    http_req_failed: ["rate==0"],
+  },
 };
 
 export default function () {

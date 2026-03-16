@@ -38,6 +38,9 @@ export const options = {
       env: { TREINADOR: "Juan", ATAQUE: "1" },
     },
   },
+  thresholds: {
+    http_req_failed: ["rate==0"],
+  },
 };
 
 export default function () {

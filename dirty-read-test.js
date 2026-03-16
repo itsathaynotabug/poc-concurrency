@@ -20,6 +20,10 @@ export const options = {
       exec: "consulta",
     },
   },
+  thresholds: {
+    // Se qualquer requisição falhar → teste quebra
+    http_req_failed: ["rate==0"],
+  },
 };
 
 // Fica alternando o Charmander entre evoluções
