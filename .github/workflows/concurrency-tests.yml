@@ -40,8 +40,9 @@ jobs:
       # 6. Aguarda o servidor estar pronto
       - name: Aguardar servidor
         run: |
-          echo "Aguardando json-server..."
-          npx wait-on http://localhost:3000/pokemons --timeout 15000
+          echo "Aguardando json-server subir..."
+          sleep 5
+          curl http://localhost:3000/pokemons
 
       # 7. Roda os testes (cada um reseta o db antes de rodar)
       - name: Lost Update Test
