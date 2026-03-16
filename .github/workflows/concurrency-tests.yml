@@ -43,21 +43,38 @@ jobs:
 
       # 7. Sobe o json-server em background
       - name: Subir json-server
-        run: npx json-server --watch db.json --port 3000 > /tmp/json-server.log 2>&1 &
+        run: nohup npx json-server --watch db.json --port 3000 > /tmp/json-server.log 2>&1 &
 
       # 8. Aguarda o servidor estar realmente pronto
       - name: Aguardar servidor estar pronto
         run: |
           echo "Aguardando json-server na porta 3000..."
-          wait-on http://localhost:3000/pokemons --timeout 30000 --interval 1000
-          echo "✅ Servidor pronto!"
+          for i in {1..30}; do
+            if curl -s http://localhost:3000/pokemons > /dev/null; then
+              echo "✅ Servidor respondendo!"
+              break
+            fi
+            echo "Tentativa $i/30..."
+            sleep 1
+          done
+          sleep 2
 
       # 9. Roda os testes (cada um reseta o db antes de rodar)
       - name: Lost Update Test
         run: node run-lost-update-test.js
+        
+      - name: Verificar json-server após Lost Update
+        run: curl -s http://localhost:3000/pokemons | jq '.[] | select(.id == 25)' || echo "⚠️ Pikachu não encontrado!"
 
       - name: Double Action Test
         run: node run-double-action-test.js
+        
+      - name: Verificar json-server após Double Action
+        run: curl -s http://localhost:3000/pokemons | jq '.[] | select(.id == 25)' || echo "⚠️ Pikachu não encontrado!"
 
       - name: Dirty Read Test
         run: node run-dirty-read-test.js
+        
+      - name: Exibir logs do json-server se houver erro
+        if: failure()
+        run: echo "JSON-Server logs:" && cat /tmp/json-server.log || echo "Nenhum log disponível"

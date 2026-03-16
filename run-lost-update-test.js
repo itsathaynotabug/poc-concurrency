@@ -2,7 +2,34 @@
 // run-lost-update-test.js
 
 const { exec } = require("child_process");
-const fs = require("fs");
+const http = require("http");
+
+async function checkServerHealth(attempts = 10) {
+  for (let i = 0; i < attempts; i++) {
+    return new Promise((resolve) => {
+      const req = http.get("http://localhost:3000/pokemons", (res) => {
+        console.log(`✅ Servidor respondendo com status ${res.statusCode}`);
+        resolve(true);
+        req.destroy();
+      });
+
+      req.on("error", () => {
+        if (i < attempts - 1) {
+          console.log(`⚠️ Tentativa ${i + 1}/${attempts} - servidor não respondendo, aguardando...`);
+          setTimeout(() => {
+            resolve(checkServerHealth(attempts - i - 1));
+          }, 1000);
+        } else {
+          console.error(`❌ Servidor não respondeu após ${attempts} tentativas!`);
+          resolve(false);
+        }
+        req.destroy();
+      });
+
+      req.setTimeout(2000);
+    });
+  }
+}
 
 async function runTest() {
   console.log("🔄 Resetando banco de dados...");
@@ -10,11 +37,19 @@ async function runTest() {
   // Roda setup-db.js
   const setup = exec("node setup-db.js");
   
-  setup.on("close", () => {
+  setup.on("close", async () => {
     console.log("⏳ Aguardando 3 segundos para json-server recarregar...");
     
-    // Aguarda 3 segundos
-    setTimeout(() => {
+    setTimeout(async () => {
+      // Verifica se servidor está saudável
+      console.log("🏥 Verificando saúde do servidor json-server...");
+      const isHealthy = await checkServerHealth(10);
+      
+      if (!isHealthy) {
+        console.error("❌ Servidor não está saudável! Abortando teste.");
+        process.exit(1);
+      }
+      
       console.log("🚀 Inicializando teste: lost-update-test.js");
       
       // Roda o teste
