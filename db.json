@@ -2,13 +2,13 @@
   "pokemons": [
     {
       "id": 1,
-      "nome": "bulbasaur",
-      "hp": 45,
-      "ataque": 49,
-      "defesa": 49,
+      "nome": "pikachu",
+      "hp": 35,
+      "ataque": 1,
+      "defesa": 40,
       "status": "ativo",
-      "editadoPor": null,
-      "timestamp": "2026-03-16T18:55:11.035Z"
+      "editadoPor": "Juan",
+      "timestamp": "2026-03-16T19:20:41.430Z"
     },
     {
       "id": 2,
