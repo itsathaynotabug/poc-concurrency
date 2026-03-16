@@ -1,0 +1,54 @@
+name: Concurrency Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: # permite rodar manualmente pelo GitHub
+
+jobs:
+  concurrency-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Instala Node
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3. Instala dependências
+      - name: Instalar dependências
+        run: npm install
+
+      # 4. Instala k6
+      - name: Instalar k6
+        run: |
+          curl https://github.com/grafana/k6/releases/download/v0.55.0/k6-v0.55.0-linux-amd64.tar.gz -L | tar xvz
+          sudo mv k6-v0.55.0-linux-amd64/k6 /usr/local/bin/k6
+          k6 version
+
+      # 5. Sobe o json-server em background
+      - name: Subir json-server
+        run: npx json-server --watch db.json --port 3000 &
+
+      # 6. Aguarda o servidor estar pronto
+      - name: Aguardar servidor
+        run: |
+          echo "Aguardando json-server..."
+          npx wait-on http://localhost:3000/pokemons --timeout 15000
+
+      # 7. Roda os testes (cada um reseta o db antes de rodar)
+      - name: Lost Update Test
+        run: node run-lost-update-test.js
+
+      - name: Double Action Test
+        run: node run-double-action-test.js
+
+      - name: Dirty Read Test
+        run: node run-dirty-read-test.js

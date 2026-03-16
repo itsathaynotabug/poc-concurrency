@@ -1,0 +1,114 @@
+{
+  "pokemons": [
+    {
+      "id": 1,
+      "nome": "bulbasaur",
+      "hp": 45,
+      "ataque": 49,
+      "defesa": 49,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.035Z"
+    },
+    {
+      "id": 2,
+      "nome": "ivysaur",
+      "hp": 60,
+      "ataque": 62,
+      "defesa": 63,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.079Z"
+    },
+    {
+      "id": 3,
+      "nome": "venusaur",
+      "hp": 80,
+      "ataque": 82,
+      "defesa": 83,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.110Z"
+    },
+    {
+      "id": 4,
+      "nome": "charmander",
+      "hp": 39,
+      "ataque": 52,
+      "defesa": 43,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.139Z"
+    },
+    {
+      "id": 5,
+      "nome": "charmeleon",
+      "hp": 58,
+      "ataque": 64,
+      "defesa": 58,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.165Z"
+    },
+    {
+      "id": 6,
+      "nome": "charizard",
+      "hp": 78,
+      "ataque": 84,
+      "defesa": 78,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.218Z"
+    },
+    {
+      "id": 7,
+      "nome": "squirtle",
+      "hp": 44,
+      "ataque": 48,
+      "defesa": 65,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.248Z"
+    },
+    {
+      "id": 8,
+      "nome": "wartortle",
+      "hp": 59,
+      "ataque": 63,
+      "defesa": 80,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.273Z"
+    },
+    {
+      "id": 9,
+      "nome": "blastoise",
+      "hp": 79,
+      "ataque": 83,
+      "defesa": 100,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.312Z"
+    },
+    {
+      "id": 10,
+      "nome": "caterpie",
+      "hp": 45,
+      "ataque": 30,
+      "defesa": 35,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.344Z"
+    },
+    {
+      "id": 25,
+      "nome": "pikachu",
+      "hp": 35,
+      "ataque": 55,
+      "defesa": 40,
+      "status": "ativo",
+      "editadoPor": null,
+      "timestamp": "2026-03-16T18:55:11.375Z"
+    }
+  ]
+}
